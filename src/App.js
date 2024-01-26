@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Expenses from "./Componenets/Expenses/Expenses";
+import NewExpense from "./Componenets/NewExpense/NewExpense";
 
+import "./App.css";
+
+const dummyExpenses = [
+  { id: 0, title: "A Book", amount: 29.8, date: new Date(2019, 2, 23) },
+  { id: 1, title: "Buy Apple", amount: 2.8, date: new Date(2020, 3, 13) },
+  { id: 2, title: "T-Shirt", amount: 26.8, date: new Date(2021, 12, 3) },
+];
 function App() {
+  const [expenses, setExpenses] = useState(dummyExpenses);
+
+  const getExpenseDataHandler = (data) => {
+    // setExpenses([data, ...expenses])
+    setExpenses((prevState) => {
+      return [data, ...prevState];
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <h1>Expense Tracker</h1>
+      <NewExpense onGetExpenseData={getExpenseDataHandler} />
+      <Expenses expenses={expenses} />
     </div>
   );
 }
